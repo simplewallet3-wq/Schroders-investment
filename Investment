@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schroders Investments | Premium Wealth & Asset Management</title>
+    <meta name="description" content="Maximize your financial future with Schroders Investments. Actively managing wealth and institutional portfolios globally with elite-tier returns.">
+    <!-- FontAwesome Icons & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #0A2540;
+            --accent-blue: #00D4B2;
+            --bright-blue: #0066CC;
+            --light-bg: #F8FAFC;
+            --white: #FFFFFF;
+            --slate-gray: #4A5568;
+            --border-color: #E2E8F0;
+            --success-green: #10B981;
+            --shadow: 0 10px 30px rgba(10, 37, 64, 0.05);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--primary-blue);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Utility Classes & Global UI Components */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 0.95rem;
+        }
+        .btn-primary {
+            background-color: var(--bright-blue);
+            color: var(--white);
+        }
+        .btn-primary:hover {
+            background-color: #0052a3;
+            transform: translateY(-2px);
+        }
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--white);
+            color: var(--white);
+        }
+        .btn-outline:hover {
+            background-color: var(--white);
+            color: var(--primary-blue);
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        .section-header p {
+            color: var(--slate-gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Navigation Header */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+        .logo span { color: var(--bright-blue); }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--slate-gray);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--bright-blue);
+        }
+        .mobile-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Tab Page Visibility State Router */
+        .page-route {
+            display: none;
+        }
+        .page-route.active-route {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(10,37,64,0.95) 0%, rgba(0,102,204,0.85) 100%), url('https://images.unsplash.com/photo-1542744094-3a31f103e35f?auto=format&fit=crop&w=1920&q=80') center/cover;
+            color: var(--white);
+            padding: 8rem 0;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+            animation: fadeInDown 1s ease;
+        }
+        .hero p {
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto 2.5rem auto;
+            opacity: 0.9;
+        }
+        .hero-btns {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        /* Statistics Grid */
+        .stats-bar {
+            background: var(--white);
+            box-shadow: var(--shadow);
+            border-radius: 12px;
+            margin-top: -4rem;
+            position: relative;
+            z-index: 10;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            padding: 2.5rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+        .stat-item h3 {
+            font-size: 2.2rem;
+            color: var(--bright-blue);
+            margin-bottom: 0.5rem;
+        }
+        .stat-item p { color: var(--slate-gray); font-weight: 500; }
+
+        /* General Overview Grid */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        .overview-img img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        /* Services Grid Cards */
+        .services-grid, .plans-grid, .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .card {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            padding: 2.5rem;
+            border-radius: 12px;
+            transition: var(--transition);
+            position: relative;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+            border-color: var(--bright-blue);
+        }
+        .card i {
+            font-size: 2.5rem;
+            color: var(--bright-blue);
+            margin-bottom: 1.5rem;
+        }
+        .card h3 { margin-bottom: 1rem; font-size: 1.35rem; }
+        .card p { color: var(--slate-gray); font-size: 0.95rem; }
+
+        /* Investment Pricing Plans Structuring */
+        .plan-card {
+            text-align: center;
+            border-top: 4px solid var(--bright-blue);
+        }
+        .plan-price {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 1.5rem 0;
+            color: var(--primary-blue);
+        }
+        .plan-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            color: var(--slate-gray);
+            font-size: 0.95rem;
+        }
+        .plan-features li { margin: 0.8rem 0; }
+
+        /* Dynamic Forms: Login, Reg & Dashboard Panels */
+        .auth-container {
+            max-width: 480px;
+            margin: 4rem auto;
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+        .auth-container h2 { text-align: center; margin-bottom: 2rem; font-weight: 700;}
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.9rem;}
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            outline: none;
+            transition: var(--transition);
+        }
+        .form-group input:focus, .form-group select:focus { border-color: var(--bright-blue); }
+
+        /* Secure Professional Dashboard Interface Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        .dash-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .dash-card-details h4 { color: var(--slate-gray); font-size: 0.9rem; margin-bottom: 0.5rem;}
+        .dash-card-details p { font-size: 1.8rem; font-weight: 700; }
+        .dash-card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(0,102,204,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--bright-blue);
+        }
+
+        /* Crypto Payment Module */
+        .payment-box {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2.5rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .crypto-option {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .crypto-option:hover, .crypto-option.selected {
+            border-color: var(--bright-blue);
+            background: rgba(0,102,204,0.02);
+        }
+        .crypto-option i { font-size: 1.8rem; margin-right: 1rem; }
+        .address-display {
+            background: var(--light-bg);
+            padding: 1rem;
+            border-radius: 6px;
+            word-break: break-all;
+            font-family: monospace;
+            font-size: 0.95rem;
+            margin: 1.5rem 0;
+            border: 1px dashed var(--border-color);
+            display: none;
+        }
+
+        /* FAQ Accordion Styling Structure */
+        .faq-item {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        .faq-question {
+            padding: 1.25rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--white);
+        }
+        .faq-answer {
+            padding: 0 1.25rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0,1,0,1);
+            color: var(--slate-gray);
+        }
+        .faq-item.open .faq-answer {
+            max-height: 1000px;
+            padding: 0 1.25rem 1.25rem 1.25rem;
+        }
+
+        /* Professional Modern Client Testimonials */
+        .testimonial-slider {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+        .testimonial-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+        .client-profile {
+            display: flex;
+            align-items: center;
+            margin-top: 1.5rem;
+            gap: 1rem;
+        }
+        .client-profile img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Structural Footer Layer */
+        footer {
+            background-color: var(--primary-blue);
+            color: rgba(255,255,255,0.8);
+            padding: 4rem 0 2rem 0;
+            border-top: 4px solid var(--bright-blue);
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr repeat(3, 1fr);
+            gap: 3rem;
+            margin-bottom: 3rem;
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer-col h4 { color: var(--white); margin-bottom: 1.5rem; font-size: 1.1rem;}
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 0.75rem; }
+        .footer-col ul li a { color: rgba(255,255,255,0.7); text-decoration: none; transition: var(--transition); }
+        .footer-col ul li a:hover { color: var(--white); padding-left: 5px; }
+        .social-links { display: flex; gap: 1rem; margin-top: 1rem; }
+        .social-links a {
+            color: var(--white);
+            background: rgba(255,255,255,0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        .social-links a:hover { background: var(--bright-blue); }
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 2rem;
+            text-align: center;
+            font-size: 0.9rem;
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Live Chat Box Widget */
+        .chat-widget {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--bright-blue);
+            color: var(--white);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            cursor: pointer;
+            z-index: 2000;
+            transition: var(--transition);
+        }
+        .chat-widget:hover { transform: scale(1.1); }
+        .chat-box {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            border: 1px solid var(--border-color);
+            display: none;
+            z-index: 2000;
+            overflow: hidden;
+        }
+        .chat-box-header {
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 1.25rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .chat-box-body { padding: 1.5rem; height: 250px; overflow-y: auto; font-size: 0.9rem; background: var(--light-bg); }
+        .chat-box-footer { padding: 1rem; border-top: 1px solid var(--border-color); display: flex; gap: 0.5rem;}
+        .chat-box-footer input { flex: 1; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 4px; outline: none; }
+
+        /* Systemic Core Keyframe Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Fluid Media Responsiveness Breakpoints */
+        @media(max-width: 992px) {
+            .overview-grid, .testimonial-slider { grid-template-columns: 1fr; }
+            .stats-bar { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-top: -2rem;}
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media(max-width: 768px) {
+            .nav-links { display: none; width: 100%; position: absolute; top: 80px; left: 0; background: var(--white); flex-direction: column; padding: 2rem; box-shadow: var(--shadow); }
+            .nav-links.active-nav { display: flex; }
+            .mobile-toggle { display: block; }
+            .hero h1 { font-size: 2.3rem; }
+            .stats-bar { grid-template-columns: 1fr; }
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Dynamic Navigation Header Area -->
+    <header>
+        <div class="navbar">
+            <a class="logo" onclick="navigateTo('home')">Schroders<span>Invest</span></a>
+            <div class="mobile-toggle" onclick="toggleMobileNav()"><i class="fa-solid fa-bars"></i></div>
+            <ul class="nav-links" id="navLinks">
+                <li><a onclick="navigateTo('home')" class="nav-item active" id="nav-home">Home</a></li>
+                <li><a onclick="navigateTo('about')" class="nav-item" id="nav-about">About Us</a></li>
+                <li><a onclick="navigateTo('services')" class="nav-item" id="nav-services">Services</a></li>
+                <li><a onclick="navigateTo('plans')" class="nav-item" id="nav-plans">Plans</a></li>
+                <li><a onclick="navigateTo('faq')" class="nav-item" id="nav-faq">FAQ</a></li>
+                <li><a onclick="navigateTo('blog')" class="nav-item" id="nav-blog">Blog</a></li>
+                <li><a onclick="navigateTo('contact')" class="nav-item" id="nav-contact">Contact</a></li>
+                <li><a onclick="navigateTo('login')" class="btn btn-outline" style="border-color: var(--bright-blue); color: var(--bright-blue); padding: 0.5rem 1.5rem;">Login</a></li>
+                <li><a onclick="navigateTo('register')" class="btn btn-primary" style="padding: 0.5rem 1.5rem;">Join</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- PAGE VIEW ROUTE: HOME PAGE VIEW -->
+    <main id="page-home" class="page-route active-route">
+        <section class="hero">
+            <div class="container" style="padding: 0;">
+                <h1>Intelligent Asset Management.<br>Exceptional Global Returns.</h1>
+                <p>For over two centuries, Schroders has been driving world-class active investment strategies across global public and private structural markets.</p>
+                <div class="hero-btns">
+                    <button class="btn btn-primary" onclick="navigateTo('register')">Create Free Account</button>
+                    <button class="btn btn-outline" onclick="navigateTo('plans')">Explore Investment Plans</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="container">
+            <div class="stats-bar">
+                <div class="stat-item"><h3>$112B+</h3><p>Assets Under Management</p></div>
+                <div class="stat-item"><h3>25+</h3><p>Global Corporate Offices</p></div>
+                <div class="stat-item"><h3>425+</h3><p>Investment Professionals</p></div>
+                <div class="stat-item"><h3>99.4%</h3><p>Client Satisfaction Rate</p></div>
+            </div>
+        </section>
+
+        <section class="container">
+            <div class="overview-grid">
+                <div class="overview-img"><img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80" alt="Financial City Skyline"></div>
+                <div>
+                    <h2 style="font-size: 2.2rem; margin-bottom: 1.5rem;">Pioneering Future Performance</h2>
+                    <p style="color: var(--slate-gray); margin-bottom: 1.5rem;">At Schroders, we deploy an active edge combining rigorous global market metri
