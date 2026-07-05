@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schroders Investments | Premium Wealth & Asset Management</title>
+    <meta name="description" content="Maximize your financial future with Schroders Investments. Actively managing wealth and institutional portfolios globally with elite-tier returns.">
+    <!-- FontAwesome Icons & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #0A2540;
+            --accent-blue: #00D4B2;
+            --bright-blue: #0066CC;
+            --light-bg: #F8FAFC;
+            --white: #FFFFFF;
+            --slate-gray: #4A5568;
+            --border-color: #E2E8F0;
+            --success-green: #10B981;
+            --shadow: 0 10px 30px rgba(10, 37, 64, 0.05);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--primary-blue);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Utility Classes & Global UI Components */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 0.95rem;
+        }
+        .btn-primary {
+            background-color: var(--bright-blue);
+            color: var(--white);
+        }
+        .btn-primary:hover {
+            background-color: #0052a3;
+            transform: translateY(-2px);
+        }
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--white);
+            color: var(--white);
+        }
+        .btn-outline:hover {
+            background-color: var(--white);
+            color: var(--primary-blue);
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        .section-header p {
+            color: var(--slate-gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Navigation Header */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+        .logo span { color: var(--bright-blue); }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--slate-gray);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--bright-blue);
+        }
+        .mobile-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Tab Page Visibility State Router */
+        .page-route {
+            display: none;
+        }
+        .page-route.active-route {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(10,37,64,0.95) 0%, rgba(0,102,204,0.85) 100%), url('https://images.unsplash.com/photo-1542744094-3a31f103e35f?auto=format&fit=crop&w=1920&q=80') center/cover;
+            color: var(--white);
+            padding: 8rem 0;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+            animation: fadeInDown 1s ease;
+        }
+        .hero p {
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto 2.5rem auto;
+            opacity: 0.9;
+        }
+        .hero-btns {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        /* Statistics Grid */
+        .stats-bar {
+            background: var(--white);
+            box-shadow: var(--shadow);
+            border-radius: 12px;
+            margin-top: -4rem;
+            position: relative;
+            z-index: 10;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            padding: 2.5rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+        .stat-item h3 {
+            font-size: 2.2rem;
+            color: var(--bright-blue);
+            margin-bottom: 0.5rem;
+        }
+        .stat-item p { color: var(--slate-gray); font-weight: 500; }
+
+        /* General Overview Grid */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        .overview-img img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        /* Services Grid Cards */
+        .services-grid, .plans-grid, .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .card {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            padding: 2.5rem;
+            border-radius: 12px;
+            transition: var(--transition);
+            position: relative;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+            border-color: var(--bright-blue);
+        }
+        .card i {
+            font-size: 2.5rem;
+            color: var(--bright-blue);
+            margin-bottom: 1.5rem;
+        }
+        .card h3 { margin-bottom: 1rem; font-size: 1.35rem; }
+        .card p { color: var(--slate-gray); font-size: 0.95rem; }
+
+        /* Investment Pricing Plans Structuring */
+        .plan-card {
+            text-align: center;
+            border-top: 4px solid var(--bright-blue);
+        }
+        .plan-price {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 1.5rem 0;
+            color: var(--primary-blue);
+        }
+        .plan-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            color: var(--slate-gray);
+            font-size: 0.95rem;
+        }
+        .plan-features li { margin: 0.8rem 0; }
+
+        /* Dynamic Forms: Login, Reg & Dashboard Panels */
+        .auth-container {
+            max-width: 480px;
+            margin: 4rem auto;
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+        .auth-container h2 { text-align: center; margin-bottom: 2rem; font-weight: 700;}
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.9rem;}
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            outline: none;
+            transition: var(--transition);
+        }
+        .form-group input:focus, .form-group select:focus { border-color: var(--bright-blue); }
+
+        /* Secure Professional Dashboard Interface Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        .dash-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .dash-card-details h4 { color: var(--slate-gray); font-size: 0.9rem; margin-bottom: 0.5rem;}
+        .dash-card-details p { font-size: 1.8rem; font-weight: 700; }
+        .dash-card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(0,102,204,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--bright-blue);
+        }
+
+        /* Crypto Payment Module */
+        .payment-box {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2.5rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .crypto-option {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .crypto-option:hover, .crypto-option.selected {
+            border-color: var(--bright-blue);
+            background: rgba(0,102,204,0.02);
+        }
+        .crypto-option i { font-size: 1.8rem; margin-right: 1rem; }
+        .address-display {
+            background: var(--light-bg);
+            padding: 1rem;
+            border-radius: 6px;
+            word-break: break-all;
+            font-family: monospace;
+            font-size: 0.95rem;
+            margin: 1.5rem 0;
+            border: 1px dashed var(--border-color);
+            display: none;
+        }
+
+        /* FAQ Accordion Styling Structure */
+        .faq-item {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        .faq-question {
+            padding: 1.25rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--white);
+        }
+        .faq-answer {
+            padding: 0 1.25rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0,1,0,1);
+            color: var(--slate-gray);
+        }
+        .faq-item.open .faq-answer {
+            max-height: 1000px;
+            padding: 0 1.25rem 1.25rem 1.25rem;
+        }
+
+        /* Professional Modern Client Testimonials */
+        .testimonial-slider {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+        .testimonial-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+        .client-profile {
+            display: flex;
+            align-items: center;
+            margin-top: 1.5rem;
+            gap: 1rem;
+        }
+        .client-profile img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Structural Footer Layer */
+        footer {
+            background-color: var(--primary-blue);
+            color: rgba(255,255,255,0.8);
+            padding: 4rem 0 2rem 0;
+            border-top: 4px solid var(--bright-blue);
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr repeat(3, 1fr);
+            gap: 3rem;
+            margin-bottom: 3rem;
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer-col h4 { color: var(--white); margin-bottom: 1.5rem; font-size: 1.1rem;}
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 0.75rem; }
+        .footer-col ul li a { color: rgba(255,255,255,0.7); text-decoration: none; transition: var(--transition); }
+        .footer-col ul li a:hover { color: var(--white); padding-left: 5px; }
+        .social-links { display: flex; gap: 1rem; margin-top: 1rem; }
+        .social-links a {
+            color: var(--white);
+            background: rgba(255,255,255,0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        .social-links a:hover { background: var(--bright-blue); }
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 2rem;
+            text-align: center;
+            font-size: 0.9rem;
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Live Chat Box Widget */
+        .chat-widget {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--bright-blue);
+            color: var(--white);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            cursor: pointer;
+            z-index: 2000;
+            transition: var(--transition);
+        }
+        .chat-widget:hover { transform: scale(1.1); }
+        .chat-box {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            border: 1px solid var(--border-color);
+            display: none;
+            z-index: 2000;
+            overflow: hidden;
+        }
+        .chat-box-header {
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 1.25rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .chat-box-body { padding: 1.5rem; height: 250px; overflow-y: auto; font-size: 0.9rem; background: var(--light-bg); }
+        .chat-box-footer { padding: 1rem; border-top: 1px solid var(--border-color); display: flex; gap: 0.5rem;}
+        .chat-box-footer input { flex: 1; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 4px; outline: none; }
+
+        /* Systemic Core Keyframe Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Fluid Media Responsiveness Breakpoints */
+        @media(max-width: 992px) {
+            .overview-grid, .testimonial-slider { grid-template-columns: 1fr; }
+            .stats-bar { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-top: -2rem;}
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media(max-width: 768px) {
+            .nav-links { display: none; width: 100%; position: absolute; top: 80px; left: 0; background: var(--white); flex-direction: column; padding: 2rem; box-shadow: var(--shadow); }
+            .nav-links.active-nav { display: flex; }
+            .mobile-toggle { display: block; }
+            .hero h1 { font-size: 2.3rem; }
+            .stats-bar { grid-template-columns: 1fr; }
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Dynamic Navigation Header Area -->
+    <header>
+        <div class="navbar">
+            <a class="logo" onclick="navigateTo('home')">Schroders<span>Invest</span></a>
+            <div class="mobile-toggle" onclick="toggleMobileNav()"><i class="fa-solid fa-bars"></i></div>
+            <ul class="nav-links" id="navLinks">
+                <li><a onclick="navigateTo('home')" class="nav-item active" id="nav-home">Home</a></li>
+                <li><a onclick="navigateTo('about')" class="nav-item" id="nav-about">About Us</a></li>
+                <li><a onclick="navigateTo('services')" class="nav-item" id="nav-services">Services</a></li>
+                <li><a onclick="navigateTo('plans')" class="nav-item" id="nav-plans">Plans</a></li>
+                <li><a onclick="navigateTo('faq')" class="nav-item" id="nav-faq">FAQ</a></li>
+                <li><a onclick="navigateTo('blog')" class="nav-item" id="nav-blog">Blog</a></li>
+                <li><a onclick="navigateTo('contact')" class="nav-item" id="nav-contact">Contact</a></li>
+                <li><a onclick="navigateTo('login')" class="btn btn-outline" style="border-color: var(--bright-blue); color: var(--bright-blue); padding: 0.5rem 1.5rem;">Login</a></li>
+                <li><a onclick="navigateTo('register')" class="btn btn-primary" style="padding: 0.5rem 1.5rem;">Join</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- PAGE VIEW ROUTE: HOME PAGE VIEW -->
+    <main id="page-home" class="page-route active-route">
+        <section class="hero">
+            <div class="container" style="padding: 0;">
+                <h1>Intelligent Asset Management.<br>Exceptional Global Returns.</h1>
+                <p>For over two centuries, Schroders has been driving world-class active investment strategies across global public and private structural markets.</p>
+                <div class="hero-btns">
+                    <button class="btn btn-primary" onclick="navigateTo('register')">Create Free Account</button>
+                    <button class="btn btn-outline" onclick="navigateTo('plans')">Explore Investment Plans</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="container">
+            <div class="stats-bar">
+                <div class="stat-item"><h3>$112B+</h3><p>Assets Under Management</p></div>
+                <div class="stat-item"><h3>25+</h3><p>Global Corporate Offices</p></div>
+                <div class="stat-item"><h3>425+</h3><p>Investment Professionals</p></div>
+                <div class="stat-item"><h3>99.4%</h3><p>Client Satisfaction Rate</p></div>
+            </div>
+        </section>
+
+        <section class="container">
+            <div class="overview-grid">
+                <div class="overview-img"><img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80" alt="Financial City Skyline"></div>
+                <div>
+                    <h2 style="font-size: 2.2rem; margin-bottom: 1.5rem;">Pioneering Future Performance</h2>
+                    <p style="color: var(--slate-gray); margin-bottom: 1.5rem;">At Schroders, we deploy an active edge combining rigorous global market metrics, innovative data modeling infrastructure, and deep systemic insight to continuously safeguard and scale your capital resources efficiently.</p>
+                    <button class="btn btn-primary" onclick="navigateTo('about')">Learn More About Our Heritage</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- PAGE VIEW ROUTE: ABOUT US VIEW -->
+    <main id="page-about" class="page-route">
+        <section class="container">
+            <div class="section-header">
+                <h2>Our Corporate Heritage</h2>
+                <p>Building trusted generational wealth infrastructure partnerships with a structural focus on modern corporate prosperity.</p>
+            </div>
+            <div class="overview-grid">
+                <div>
+                    <h3>200+ Years of Pure Expertise</h3><br>
+                    <p style="color: var(--slate-gray); margin-bottom: 1rem;">We leverage specialized global private market inefficiencies and diversified asset management architectures to deliver premium risk-adjusted returns at corporate scale.</p>
+                    <p style="color: var(--slate-gray);">Underpinning everything we execute is the persistent historical stability of our foundational framework, drawing on generations of strategic asset optimization.</p>
+                </div>
+                <div class="overview-img"><img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80" alt="Financial Professionals"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- PAGE VIEW ROUTE: SERVICES VIEW -->
+    <main id="page-services" class="page-route">
+        <section class="container">
+            <div class="section-header">
+                <h2>Our Premium Investment Capabilities</h2>
+                <p>Tailor-made actively managed solution frameworks spanning public, institutional and alternative private fields globally.</p>
+            </div>
+            <div class="services-grid">
+                <div class="card"><i class="fa-solid fa-chart-line"></i><h3>Public Market Equities</h3><p>Rigorous active perspective capturing high potential corporate equity listings across continuous market cycles.</p></div>
+                <div class="card"><i class="fa-solid fa-building-columns"></i><h3>Private Markets (Alpha)</h3><p>Unlocking off-market alpha returns within real estate, infrastructure assets, and direct venture private equity.</p></div>
+                <div class="card"><i class="fa-solid fa-shield-halved"></i><h3>Wealth Management</h3><p>High and ultra-high-net-worth strategic personal advisory, legacy protection, and asset allocation pipelines.</p></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- PAGE VIEW ROUTE: INVESTMENT PLANS VIEW -->
+    <main id="page-plans" class="page-route">
+        <section class="container">
+            <div class="section-header">
+                <h2>Strategic Investment Tier Plans</h2>
+                <p>Select an optimized financial portfolio tier tailored directly to maximize your capital generation goals.</p>
+            </div>
+            <div class="plans-grid">
+                <div class="card plan-card">
+                    <h3>Core Balanced Tier</h3>
+                    <div class="plan-price">4.5% / Mo</div>
+                    <ul class="plan-features">
+                        <li>Minimum Capital: $500</li>
+                        <li>Maximum Capital: $4,999</li>
+                        <li>24/7 Dedicated Portfolio Monitoring</li>
+                        <li>Bi-Weekly Profit Payout System</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="navigateTo('register')">Get Started Now</button>
+                </div>
+                <div class="card plan-card" style="border-color: var(--bright-blue);">
+                    <h3>Elite Alpha Tier</h3>
+                    <div class="plan-price">8.5% / Mo</div>
+                    <ul class="plan-features">
+                        <li>Minimum Capital: $5,000</li>
+                        <li>Maximum Capital: $49,999</li>
+                        <li>Premium Multi-Asset Diversification</li>
+                        <li>Dedicated Account Representative</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="navigateTo('register')">Get Started Now</button>
+                </div>
+                <div class="card plan-card">
+                    <h3>Institutional Sovereign</h3>
+                    <div class="plan-price">14.0% / Mo</div>
+                    <ul class="plan-features">
+                        <li>Minimum Capital: $50000</li>
+                        <li>Maximum Capital: Unlimited</li>
+                        <li>Private Venture Deal Inflow Access</li>
+                        <li>Instant Capital Liquidity Windows</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="navigateTo('register')">Get Started Now</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- PAGE VIEW ROUTE: FAQ SECTION VIEW -->
+    <main id="page-faq" class="page-route">
+        <section class="container" style="max-width: 800px;">
+            <div class="section-header">
+                <h2>Frequently Asked Inquiries</h2>
+                <p>Instant clarity regarding our high-performance investment processes and portfolio operations.</p>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">How secure is my portfolio asset infrastructure? <i class="fa-solid fa-chevron-down"></i></div>
+                <div class="faq-answer">All customer portfolio funds are held structurally segregated inside tier-1 corporate banking entities and protected under industry-standard zero-knowledge multi-signature secure encryption layers.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">What methods can I utilize to deposit capital into my portfolio? <i class="fa-solid fa-chevron-down"></i></div>
+                <div class="faq-answer">We seamlessly accept instant cryptographic ledger assets including Bitcoin (BTC), Tether (USDT), and Ethereum (ETH) for direct immediate portfolio deployment.</div>
+            </div>
+        </section>
+    </main>
+
+    <!-- PAGE VIEW ROUTE: BLOG SECTION VIEW -->
+    <main id="page-blog" class="page-route">
+        <section class="container">
+            <div class="section-header">
+                <h2>Global Intelligence & Market Insights</h2>
+                <p>The latest macroeconomic perspective analyses straight from our active investment desks.</p>
+            </div>
+            <div class="blog-grid">
+                <div class="card" style="padding:0; overflow:hidden;">
+                    <img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=400&q=80" style="width:100%; height:200px; object-fit:cover;" alt="Charts">
+                    <div style="padding: 1.5rem;">
+                        <h4 style="margin-bottom:0.5rem;">Navigating Structural Macroeconomic Shifts</h4>
+                        <p style="font-size:0.85rem; color:var(--slate-gray); margin-bottom:1rem;">July 2026 Strategy Paper</p>
+                        <a onclick="navigateTo('blog')" style="color:var(--bright-blue); font-weight:600; text-decoration:none; font-size:0.9rem; cursor:pointer;">Read Article →</a>
+                    </div>
+                </div>
+                <div class="card" style="padding:0; overflow:hidden;">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=400&q=80" style="width:100%; height:200px; object-fit:cover;" alt="Data Analysis">
+                    <div style="padding: 1.5rem;">
+                        <h4 style="margin-bottom:0.5rem;">Private Capital Resiliency Index Analysis</h4>
+                        <p style="font-size:0.85rem; color:var(--slate-gray); margin-bottom:1rem;">June 2026 Trends Report</p>
+                        <a onclick="navigateTo('blog')" style="color:var(--bright-blue); font-weight:600; text-decoration:none; font-size:0.9rem; cursor:pointer;">Read Article →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- PAGE VIEW ROUTE: CONTACT US VIEW -->
+    <main id="page-contact" class="page-route">
+        <section class="container" style="max-width: 600px;">
+            <div class="section-header">
+                <h2>Connect Globally With Us</h2>
+                <p>Our multilingual advisory support desk answers all institutional and retail portfolio inquiries.</p>
+            </div>
+            <div class="card">
+                <form id="contactForm" onsubmit="handleFormSubmit(event, 'Message transmitted successfully. Our asset officers will contact you shortly.')">
+                    <div class="form-group"><label>Full Legal Name</label><input type="text" required></div>
+                    <div class="form-group"><label>Corporate Email Address</label><input type="email" required></div>
+                    <div class="form-group"><label>Message Content</label><textarea style="width:100%; padding:1rem; border:1px solid var(--border-color); border-radius:6px; outline:none; min-height:120px; font-family:inherit;"></textarea></div>
+                    <button class="btn btn-primary" type="submit" style="width:100%;">Transmit Secure Inquiry</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- PAGE VIEW ROUTE: SECURE AUTHENTICATION LOGIN VIEW -->
+    <main id="page-login" class="page-route">
+        <section class="auth-container">
+            <h2>Access Secure Dashboard</h2>
+            <form onsubmit="handleAuth(event, 'dashboard')">
+                <div class="form-group"><label>Authorized Email Address</label><input type="email" placeholder="client@schroders-invest.com" required></div>
+                <div class="form-group"><label>Secret Passcode</label><input type="password" required></div>
+                <button class="btn btn-primary" type="submit" style="width:100%;">Secure Server Login</button>
+                <p style="text-align:center; font-size:0.85rem; margin-top:1.5rem; color:var(--slate-gray);">Unauthorized access strictly logs IP data protocols. <a onclick="navigateTo('register')" style="color:var(--bright-blue); cursor:pointer;">Register Account</a></p>
+            </form>
+        </section>
+    </main>
+
+    <!-- PAGE VIEW ROUTE: SECURE AUTHENTICATION REGISTRATION VIEW -->
+    <main id="page-register" class="page-route">
+        <section class="auth-container">
+            <h2>Establish Secure Portfolio Portfolio</h2>
+            <form onsubmit="handleAuth(event, 'dashboard')">
+                <div class="form-group"><label>Full Legal Signature Name</label><input type="text" placeholder="John Doe" required></div>
+                <div class="form-group"><label>Primary Corporate Email</label><input type="email" required></div>
+                <div class="form-group"><label>Account Access Password</label><input type="password" required></div>
+                <button class="btn btn-primary" type="submit" style="width:100%;">Complete Secure Registration</button>
+                <p style="text-align:center; font-size:0.85rem; margin-top:1.5rem; color:var(--slate-gray);">Already verified client status? <a onclick="navigateTo('login')" style="color:var(--bright-blue); cursor:pointer;">Login Securely</a></p>
+            </form>
+        </section>
+    </main>
+
+    <!-- PAGE VIEW ROUTE: SECURE CLIENT ACCOUNT DASHBOARD VIEW -->
+    <main id="page-dashboard" class="page-route">
+        <section class="container">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:3rem;">
+                <div>
+                    <h2 style="font-size:2rem; font-weight:700;">Welcome Back, Active Client</h2>
+                    <p style="color:var(--slate-gray);">Portfolio Security Protocol State: Active SSL Enforced</p>
+                </div>
+                <button class="btn btn-outline" onclick="navigateTo('home')" style="border-color:var(--bright-blue); color:var(--bright-blue);">Secure Terminate Session</button>
+            </div>
+
+            <!-- Realtime Metrics Panel Layout Grid -->
+            <div class="dashboard-grid">
+                <div class="dash-card">
+                    <div class="dash-card-details"><h4>Total Controlled Liquidity Value</h4><p>$124,580.00</p></div>
+                    <div class="dash-card-icon"><i class="fa-solid fa-wallet"></i></div>
+                </div>
+                <div class="dash-card">
+                    <div class="dash-card-details"><h4>Compounded Accrued Net Profits</h4><p style="color: var(--success-green);">+$14,235.50</p></div>
+                    <div class="dash-card-icon"><i class="fa-solid fa-arrow-trend-up"></i></div>
+                </div>
+                <div class="dash-card">
+                    <div class="dash-card-details"><h4>Active Strategy Deployments</h4><p>2 Portfolios</p></div>
+                    <div class="dash-card-icon"><i class="fa-solid fa-layer-group"></i></div>
+                </div>
+            </div>
+
+            <!-- Intermediary Portfolio Funding Infrastructure Form -->
+            <div class="payment-box">
+                <h3 style="text-align:center; margin-bottom:1.5rem;">Inject Portfolio Investment Liquidity</h3>
+                <div class="form-group">
+                    <label>Target Funding Investment Tier Package</label>
+                    <select>
+                        <option>Core Balanced Package Tier ($500 - $4,999)</option>
+                        <option>Elite Alpha Package Tier ($5,000 - $49,999)</option>
+                        <option>Institutional Sovereign Package Tier ($50,000+)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Funding Inbound Amount ($ USD)</label>
+                    <input type="number" placeholder="5000" min="500">
+                </div>
+                <label class="form-group" style="font-weight:500; font-size:0.9rem; margin-bottom:0.5rem; display:block;">Select Secure Inbound Ledger Asset Protocol</label>
+                
+                <div class="crypto-option" onclick="selectCrypto('btc', '1HnmFGoA4UGFuMCP9DrRUpNP8x1FrGbnDC')">
+                    <i class="fa-brands fa-bitcoin" style="color:#F7931A;"></i>
+                    <div><strong>Bitcoin Protocol Network (BTC)</strong><br><small>Instant Blockchain Verification Ledger</small></div>
+                </div>
+                <div class="crypto-option" onclick="selectCrypto('usdt-trc', 'THG2WgaEf4fzUHbeh56Q8GmYXg6rNomfuy')">
+                    <i class="fa-solid fa-t" style="color:#26A17B;"></i>
+                    <div><strong>Tether USD Protocol (USDT TRC20)</strong><br><small>TRON network stablecoin standard validation</small></div>
+                </div>
+                <div class="crypto-option" onclick="selectCrypto('eth', '0xa293108590e799e487af1d27a6a5960da7fa014c')">
+                    <i class="fa-brands fa-ethereum" style="color:#627EEA;"></i>
+                    <div><strong>Ethereum Protocol (ETH ERC20)</strong><br><small>Smart network asset structural deposit ledger</small></div>
+                </div>
+                <div class="crypto-option" onclick="selectCrypto('usdt-bep', '0xa293108590e799e487af1d27a6a5960da7fa014c')">
+                    <i class="fa-solid fa-coins" style="color:#F3BA2F;"></i>
+                    <div><strong>Tether USD Protocol (USDT BEP20)</strong><br><small>BNB Chain smart network stablecoin ledger</small></div>
+                </div>
+
+                <!-- Live Dynamic Target Cryptographic Address Manifestation Node -->
+                <div class="address-display" id="addressBox"></div>
+                
+                <button class="btn btn-primary" style="width:100%; margin-top:1rem;" onclick="alert('Inbound deposit pipeline monitored. Awaiting automated transaction validation confirmation.')">Transmit Secure Deposit Notification</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Structural High Quality Client Testimonials Layout Area -->
+    <section class="container" style="background: rgba(0,102,204,0.02); border-radius:12px; margin-top: 4rem; margin-bottom: 4rem; padding: 4rem 2rem;">
+        <div class="section-header">
+            <h2>Verified Institutional Endorsements</h2>
+            <p>Read global reports from strategic long term investors who trust our multi-asset frameworks daily.</p>
+        </div>
+        <div class="testimonial-slider">
+            <div class="testimonial-card">
+                <p>"The predictive active edge framework deployed by Schroders private markets team completely optimized our sovereign family trust allocation model effortlessly."</p>
+                <div class="client-profile">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=150&q=80" alt="Client 1">
+                    <div><strong>Marcus Vance</strong><br><small>Managing Trustee, Vance Wealth</small></div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p>"Seamless blockchain integration infrastructure options combined with high-grade multi-tier portfolio returns make this platform unmatched in modern finance."</p>
+                <div class="client-profile">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80" alt="Client 2">
+                    <div><strong>Dr. Elena Rostova</strong><br><small>Chief Financial Officer, FinTech Capital</small></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Production-Grade Corporate Structural Footer Layer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <a class="logo" style="color:var(--white); margin-bottom:1rem; display:block;">Schroders<span>Invest</span></a>
+                <p style="font-size:0.9rem; opacity:0.8;">Providing world-wide structural liquidity deployment, advisory asset allocation, and alpha investment generation since 1804.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Capabilities</h4>
+                <ul>
+                    <li><a onclick="navigateTo('services')">Private Markets</a></li>
+                    <li><a onclick="navigateTo('services')">Equities Allocation</a></li>
+                    <li><a onclick="navigateTo('services')">Wealth Planning</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Legal Information</h4>
+                <ul>
+                    <li><a href="#">Privacy Framework</a></li>
+                    <li><a href="#">Terms of Protocol</a></li>
+                    <li><a href="#">Anti-Fraud Guard System</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Global Corporate Hubs</h4>
+                <p style="font-size:0.9rem; opacity:0.8;">1 London Wall Place,<br>London, EC2Y 5AU,<br>United Kingdom</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; Copyright 2026 Schroders Investments Group plc. All structural portfolio assets subject to systemic risk management rules.
+        </div>
+    </footer>
+
+    <!-- Interactive Live Chat Widget UI Module -->
+    <div class="chat-widget" onclick="toggleChatBox()"><i class="fa-solid fa-comments"></i></div>
+    <div class="chat-box" id="chatBox">
+        <div class="chat-box-header"><span>Secure Live Financial Desk</span><i class="fa-solid fa-xmark" style="cursor:pointer;" onclick="toggleChatBox()"></i></div>
+        <div class="chat-box-body" id="chatBody">
+            <div style="background:var(--white); padding:0.75rem; border-radius:6px; max-width:85%; margin-bottom:1rem; box-shadow:var(--shadow);">Welcome to Schroders Client Desk. Tell us your asset initialization goals today.</div>
+        </div>
+        <div class="chat-box-footer">
+            <input type="text" id="chatInput" placeholder="Type secure client transmission...">
+            <button class="btn btn-primary" style="padding:0.5rem 1rem;" onclick="sendLiveChatMessage()">Send</button>
+        </div>
+    </div>
+
+    <!-- Core Functional JavaScript Single Page Application Router Control Engine -->
+    <script>
+        // Systemic SPA Tab Navigation Matrix Controller
+        function navigateTo(pageId) {
+            // Hide all active routes gracefully
+            const pages = document.querySelectorAll('.page-route');
+            pages.forEach(page => page.classList.remove('active-route'));
+
+            // Show target page context structure
+            const targetPage = document.getElementById(`page-${pageId}`);
+            if(targetPage) {
+                targetPage.classList.add('active-route');
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            }
+
+            // Sync structural navigational menu header elements active highlight state 
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => item.classList.remove('active'));
+            const dynamicActiveNav = document.getElementById(`nav-${pageId}`);
+            if(dynamicActiveNav) dynamicActiveNav.classList.add('active');
+
+            // Force mobile collapsible link closure state if active
+            document.getElementById('navLinks').classList.remove('active-nav');
+        }
+
+        // Toggle Responsive Nav Menubar Bar View State
+        function toggleMobileNav() {
+            document.getElementById('navLinks').classList.toggle('active-nav');
+        }
+
+        // FAQ UI Interactive Accordion Handler
+        function toggleFaq(element) {
+            const wrapper = element.parentElement;
+            wrapper.classList.toggle('open');
+            const icon = element.querySelector('i');
+            if(wrapper.classList.contains('open')) {
+                icon.className = "fa-solid fa-chevron-up";
+            } else {
+                icon.className = "fa-solid fa-chevron-down";
+            }
+        }
+
+        // Handle Secure Mock Form Submission Messages
+        function handleFormSubmit(e, messageText) {
+            e.preventDefault();
+            alert(messageText);
+            e.target.reset();
+        }
+
+        // Dynamic State Mock Authrorization Session Instantiator
+        function handleAuth(e, targetPage) {
+            e.preventDefault();
+            navigateTo(targetPage);
+        }
+
+        // Interactive Live Chat Messaging Emulator
+        function toggleChatBox() {
+            const chat = document.getElementById('chatBox');
+            chat.style.display = (chat.style.display === 'block') ? 'none' : 'block';
+        }
+
+        function sendLiveChatMessage() {
+            const input = document.getElementById('chatInput');
+            const body = document.getElementById('chatBody');
+            if(input.value.trim() !== "") {
+                const messageDiv = document.createElement('div');
+                messageDiv.style.cssText = "background: var(--bright-blue); color: var(--white); padding: 0.75rem; border-radius: 6px; max-width: 85%; margin-left: auto; margin-bottom: 1rem; text-align: right; box-shadow: var(--shadow);";
+                messageDiv.innerText = input.value;
+                body.appendChild(messageDiv);
+                
+                const responseDiv = document.createElement('div');
+                responseDiv.style.cssText = "background: var(--white); padding: 0.75rem; border-radius: 6px; max-width: 85%; margin-bottom: 1rem; box-shadow: var(--shadow);";
+                responseDiv.innerText = "Securing cryptographic officer desk mapping... Thank you for your patience.";
+                setTimeout(() => { body.appendChild(responseDiv); body.scrollTop = body.scrollHeight; }, 1000);
+
+                input.value = "";
+                body.scrollTop = body.scrollHeight;
+            }
+        }
+
+        // Cryptographic Multi-Chain Address Presenter Mechanism Core logic
+        function selectCrypto(cryptoType, walletAddress) {
+            // Clear current structural selection borders state visual layout 
+            const options = document.querySelectorAll('.crypto-option');
+            options.forEach(opt => opt.classList.remove('selected'));
+
+            // Flag current selected item object
+            event.currentTarget.classList.add('selected');
+
+            // Render output block address presentation content frame
+            const addressBox = document.getElementById('addressBox');
+            addressBox.style.display = "block";
+            addressBox.innerHTML = `<strong>Inbound Safe Deposit Chain Target Address Details:</strong><br><span style='color:var(--bright-blue); font-weight:700;'>${walletAddress}</span><br><br><small style='color:var(--slate-gray);'><i class='fa-solid fa-triangle-exertion'></i> Ensure matching blockchain transport token protocol standard layer to prevent network allocation capital leakage.</small>`;
+        }
+    </script>
+</body>
+</html>
